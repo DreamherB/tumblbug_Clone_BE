@@ -97,7 +97,7 @@ router.get('/article/:articleId', async (req, res) => {
 try {
   router.patch(
     '/article/:articleId/donation',
-    authMiddlleware,
+    // authMiddlleware,
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
@@ -127,7 +127,7 @@ try {
 try {
   router.patch(
     '/article/:articleId/donationCancel',
-    authMiddlleware,
+    // authMiddlleware,
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
