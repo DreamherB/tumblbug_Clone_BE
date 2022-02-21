@@ -1,14 +1,16 @@
 const jwt = require('jsonwebtoken');
 const User = require('../schemas/user');
 require('dotenv').config();
-// const { JWT_SECRET_KEY } = process.env
+const { JWT_SECRET_KEY } = process.env
 
 
 
 module.exports = (req, res, next) => {
   console.log(11)
   
-  const { authorization } = req.headers; 
+  const authorization = req.headers.authorization; 
+  console.log(req)
+  console.log(req.headers)
   console.log(authorization)
   console.log(22)
 
@@ -26,7 +28,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const { email } = jwt.verify(tokenValue, process.env.JWT_SECRET_KEY);
+    const { email } = jwt.verify(tokenValue, JWT_SECRET_KEY);
     User.findOne({ email })
       .exec()
       .then((user) => {
