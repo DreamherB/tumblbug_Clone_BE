@@ -101,6 +101,8 @@ try {
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
+      console.log(77)
+      console.log(user)
 
       await articles
         .findOneAndUpdate(
@@ -117,6 +119,7 @@ try {
     }
   );
 } catch (error) {
+  console.log(88)
   res.status(400).send({ result: false });
 }
 

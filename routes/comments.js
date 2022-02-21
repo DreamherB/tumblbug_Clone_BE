@@ -41,6 +41,7 @@ router.post(
         //0과 1사이의 수를 36진법 문자열로 변환 후 2번째 인덱스부터 6번째 인덱스의 직전인 5번째 인덱스까지 잘라냄, 고유 값인 article_id 양 옆으로 더해주어 새로운 고유값 생성
 
         const email = res.locals.user.email
+        const nickname = res.locals.user.nickname
 
         await Comment.create({
             commentId,
