@@ -3,6 +3,7 @@ const User = require('../schemas/user');
 const { JWT_SECRET_KEY } = process.env;
 require('dotenv').config();
 
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   const [tokenType, tokenValue] = authorization.split(' ');
