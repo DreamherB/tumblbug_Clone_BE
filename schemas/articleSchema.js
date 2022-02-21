@@ -22,7 +22,7 @@ const articleSchema = new mongoose.Schema({
   deadline: {
     type: String,
   },
-  coontents: {
+  contents: {
     type: String,
   },
   donator: {
