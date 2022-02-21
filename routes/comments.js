@@ -16,7 +16,7 @@ router.get("comments/:articleId", async (req, res) => {
         commentId :  comments.commentId,
         articleId : comments.articleId,
         nickname : comments.nickname,
-        content : comments.content,
+        comment : comments.comment,
         email: comments.email,
       }]
        });
@@ -29,8 +29,8 @@ router.post(
     authMiddleware,
     async (req, res) => {
 
-        const { content } = req.body;
-        if (!content) {
+        const { comment } = req.body;
+        if (!comment) {
             return res
                 .status(400)
                 .json({ result: false,
@@ -46,7 +46,7 @@ router.post(
             commentId,
             email,
             articleId,
-            content,
+            comment,
             nickname,
         });
 
@@ -89,18 +89,17 @@ router.delete(
 
 router.patch('/comments/modify/:commentId', authMiddleware, async (req, res) => {
     const { commentId } = req.params;
-    const { content } = req.body;
-    const nickname  = res.locals.user.nickname;
+    const { comment } = req.body;
     const comment = await Comment.findOne({ commentId });
     if (!comment) {
        return res.status(400).send({msg:'본인의 글이 아닙니다.'})
     }
-    if (content.length === 0) {
+    if (comment.length === 0) {
         return res.status(400).send({ result: false,
             msg: '내용을 입력해주세요!' })
     }
     
-    await Comment.updateOne({ commentId },{$set:{content}})
+    await Comment.updateOne({ commentId },{$set:{comment}})
 
     res.status(200).json({ result: true,
         msg: '수정 완료되었습니다.'
