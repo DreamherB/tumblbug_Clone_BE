@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const articles = require('../schemas/articleSchema');
-const authMiddlleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/auth-middleware');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -52,7 +52,7 @@ router.get('/articles/category', async (req, res) => {
 });
 
 // nickname & 후원한 프로젝트 조회 (마이페이지)
-router.get('/articles/myDonatedProjects', authMiddlleware, async (req, res) => {
+router.get('/articles/myDonatedProjects', authMiddleware, async (req, res) => {
   const { user } = res.locals;
   const postings = await articles.find(
     { donator: { $elemMatch: { email: user.email } } },
@@ -97,7 +97,7 @@ router.get('/article/:articleId', async (req, res) => {
 try {
   router.patch(
     '/article/:articleId/donation',
-    // authMiddlleware,
+    authMiddleware,
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
@@ -127,7 +127,7 @@ try {
 try {
   router.patch(
     '/article/:articleId/donationCancel',
-    // authMiddlleware,
+    authMiddleware,
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
