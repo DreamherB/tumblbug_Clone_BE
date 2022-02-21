@@ -27,7 +27,7 @@ router.post("/users/signup", async (req, res) => {
 
 // 로그인 API
 router.post("/users/login", async (req, res) => {
-    const { email, password } = req.body; // email 양식 맞춰서 받는 것 고려해야 하는지?
+    const { email, password } = req.body; // email 양식 맞춰서 받는 것 고려해야 하는 것 추후 구현
     let check_password = false;
     const user = await User.findOne({ email });
     if (user) {
@@ -39,9 +39,9 @@ router.post("/users/login", async (req, res) => {
             msg: '아이디 또는 비밀번호를 확인해주세요.',
             });
     }
-    console.log(nickname, '로 로그인 되었습니다.')
+        
     res.send({ result: true,
-        token: jwt.sign({ nickname }, JWT_SECRET_KEY), // jwt.sign의 첫번째 인자는 payload부분, token 자체는 위변조하기 힘들지만 담긴 데이터는 볼 수 있으므로
+        token: jwt.sign({ nickname: user.nickname }, JWT_SECRET_KEY), // jwt.sign의 첫번째 인자는 payload부분, token 자체는 위변조하기 힘들지만 담긴 데이터는 볼 수 있으므로
     });
 });
 
