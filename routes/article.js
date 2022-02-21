@@ -83,7 +83,8 @@ router.get('/articles', async (req, res) => {
 
 // 상세 게시글 조회 (게시클 클릭)
 router.get('/article/:articleId', async (req, res) => {
-  const postings = await articles.findById(req.params.articleId);
+  const { articleId } = req.params;
+  const postings = await articles.find({ articleId: articleId });
   const donatorNum = await postings.donator.length;
   res.json({
     result: true,
