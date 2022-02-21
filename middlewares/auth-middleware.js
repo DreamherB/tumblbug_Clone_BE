@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   console.log(11)
   
   const authorization = req.headers.authorization; 
-
+//   console.log(req)
   console.log(req.headers)
   console.log(authorization)
   console.log(22)
