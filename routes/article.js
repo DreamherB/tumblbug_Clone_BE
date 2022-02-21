@@ -22,15 +22,28 @@ router.get('/articles/popularProjects', async (req, res) => {
   res.json({ result: true, popularProjects: postings });
 });
 
+// 전체(카테고리)
+router.get('/articles/all', async (req, res) => {
+  const postings = await articles.find(
+    {},
+    { contents: 0, donator: 0, creatorImg: 0 }
+  );
+  const count = await postings.length;
+  res.json({
+    result: true,
+    count: count,
+    allProjects: postings,
+  });
+});
+
 // 상세(카테고리)
 router.get('/articles/category', async (req, res) => {
   const { category } = req.query;
-  const result = await articles.find({ category: category });
-  const count = await result.length;
   const postings = await articles.find(
     { category: category },
     { contents: 0, donator: 0, creatorImg: 0 }
   );
+  const count = await postings.length;
   res.json({
     result: true,
     count: count,
