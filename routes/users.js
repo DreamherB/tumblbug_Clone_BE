@@ -46,7 +46,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 // 토큰 확인 API
-router.get("/users/me", authMiddleware, async (req, res) => {
+router.post("/users/me", authMiddleware, async (req, res) => {
     const { user } = res.locals;
 
     if (user) {
