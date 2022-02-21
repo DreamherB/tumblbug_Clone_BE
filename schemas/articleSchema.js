@@ -31,6 +31,9 @@ const articleSchema = new mongoose.Schema({
   creatorImg: {
     type: String,
   },
+  articleId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('articles', articleSchema);
