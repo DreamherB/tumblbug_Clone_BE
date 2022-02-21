@@ -87,7 +87,7 @@ router.delete(
 
 /*댓글 수정*/
 
-router.patch('/comments/modify/:commentId', authMiddlleware, async (req, res) => {
+router.patch('/comments/modify/:commentId', authMiddleware, async (req, res) => {
     const { commentId } = req.params;
     const { content } = req.body;
     const nickname  = res.locals.user.nickname;
