@@ -101,7 +101,6 @@ try {
     async (req, res) => {
       const { articleId } = req.params;
       const { user } = res.locals;
-      console.log(user);
 
       await articles
         .findOneAndUpdate(
@@ -130,7 +129,7 @@ try {
       const { articleId } = req.params;
       const { user } = res.locals;
 
-      const name = await articles.findById({
+      const name = await articles.findOne({
         articleId: articleId,
       });
 
