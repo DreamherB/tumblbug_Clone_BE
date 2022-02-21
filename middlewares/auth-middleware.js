@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const User = require('../schemas/user');
-const { JWT_SECRET_KEY } = process.env;
 require('dotenv').config();
 
 

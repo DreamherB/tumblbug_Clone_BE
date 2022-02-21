@@ -28,6 +28,9 @@ const articleSchema = new mongoose.Schema({
   donator: {
     type: Array,
   },
+  creatorImg: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('articles', articleSchema);
