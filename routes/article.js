@@ -104,10 +104,13 @@ try {
       console.log(user);
 
       await articles
-        .findByIdAndUpdate(articleId, {
-          $push: { donator: { email: user.email } },
-          $inc: { totalAmount: +50000 },
-        })
+        .findOneAndUpdate(
+          { articleId: articleId },
+          {
+            $push: { donator: { email: user.email } },
+            $inc: { totalAmount: +50000 },
+          }
+        )
         .exec();
       res.json({
         result: true,
@@ -128,17 +131,20 @@ try {
       const { user } = res.locals;
 
       const name = await articles.findById({
-        _id: articleId,
+        articleId: articleId,
       });
 
       const donateCancel = name.donator.filter(
         (e) => e === { email: user.email }
       );
 
-      await articles.findByIdAndUpdate(articleId, {
-        $inc: { totalAmount: -50000 },
-        donator: donateCancel,
-      });
+      await articles.findOneAndUpdate(
+        { articleId: articleId },
+        {
+          $inc: { totalAmount: -50000 },
+          donator: donateCancel,
+        }
+      );
       res.json({ result: true });
     }
   );
