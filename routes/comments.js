@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 /* 댓글 불러오기 */
 
-router.get("comments/:articleId", async (req, res) => {
+router.get("/comments/:articleId", async (req, res) => {
     const {articleId} = req.params;
     const comments = await Comment.find({ articleId });
 
@@ -25,7 +25,7 @@ router.get("comments/:articleId", async (req, res) => {
 /* 댓글 작성, DB에 등록 */
 
 router.post(
-    "comments/:articleId",
+    "/comments/:articleId",
     authMiddleware,
     async (req, res) => {
 
@@ -60,7 +60,7 @@ router.post(
 /* 댓글 삭제 */
 
 router.delete(
-    "comments/delete/:commentId",
+    "/comments/delete/:commentId",
     authMiddleware,
     async (req, res) => {
 
