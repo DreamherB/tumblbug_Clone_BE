@@ -41,7 +41,7 @@ router.post("/users/login", async (req, res) => {
     }
         
     res.send({ result: true,
-        token: jwt.sign({ nickname: user.nickname }, JWT_SECRET_KEY), // jwt.sign의 첫번째 인자는 payload부분, token 자체는 위변조하기 힘들지만 담긴 데이터는 볼 수 있으므로
+        token: jwt.sign({ email: user.email }, JWT_SECRET_KEY), // jwt.sign의 첫번째 인자는 payload부분, token 자체는 위변조하기 힘들지만 담긴 데이터는 볼 수 있으므로
     });
 });
 
