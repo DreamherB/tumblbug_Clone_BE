@@ -7,6 +7,8 @@ const authMiddlleware = require('../middlewares/auth-middleware');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
+// hi
+
 // 랜덤 게시글 8개 발송
 router.get('/articles/mainProjects', async (req, res) => {
   const postings = await articles.aggregate([{ $sample: { size: 8 } }]);
