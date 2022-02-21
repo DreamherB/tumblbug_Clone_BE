@@ -6,6 +6,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
-    "mongoose": "^6.2.2"
+    "mongoose": "^6.2.2",
+    "prettier": "^2.5.1"
   }
 }

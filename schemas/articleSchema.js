@@ -1,0 +1,33 @@
+const mongoose = require('mongoose');
+
+const articleSchema = new mongoose.Schema({
+  category: {
+    type: String,
+  },
+  nickname: {
+    type: String,
+  },
+  title: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
+  targetAmount: {
+    type: Number,
+  },
+  totalAmount: {
+    type: Number,
+  },
+  deadline: {
+    type: String,
+  },
+  coontents: {
+    type: String,
+  },
+  donator: {
+    type: Array,
+  },
+});
+
+module.exports = mongoose.model('articles', articleSchema);
