@@ -90,9 +90,10 @@ router.delete(
 router.patch('/comments/modify/:commentId', authMiddleware, async (req, res) => {
     const { commentId } = req.params;
     const { comment } = req.body;
-    const comment = await Comment.findOne({ commentId });
-    if (!comment) {
-       return res.status(400).send({msg:'본인의 글이 아닙니다.'})
+    const {email} = res.locals.user
+    const thatUser = await Comment.findOne({ commentId });
+    if (thatUser.email !== email ) {
+       return res.status(400).send({result: false, msg:'본인의 글이 아닙니다.'})
     }
     if (comment.length === 0) {
         return res.status(400).send({ result: false,
