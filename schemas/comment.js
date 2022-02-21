@@ -2,15 +2,19 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 
 const commentSchema = new mongoose.Schema({
-    comment_id:{
+    commentId:{
         type:String,
         require:true,
     },
-    user_id:{
+    email:{
         type:String,
         require:true,
     },
-    article_id:{
+    articleId:{
+        type:String,
+        require:true,
+    },
+    nickname:{
         type:String,
         require:true,
     },
@@ -18,17 +22,17 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        type: String,
-        default: moment().format("YYYY-MM-DD hh:mm"),
-    }
+    // date: {
+    //     type: String,
+    //     default: moment().format("YYYY-MM-DD hh:mm"),
+    // }
 })
 
-commentSchema.virtual("commentId").get(function () {
-    return this._id.toHexString();
-});
-commentSchema.set("toJSON", {
-    virtuals: true,
-});
+// commentSchema.virtual("commentId").get(function () {
+//     return this._id.toHexString();
+// });
+// commentSchema.set("toJSON", {
+//     virtuals: true,
+// });
 
 module.exports = mongoose.model("Comment", commentSchema)
