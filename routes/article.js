@@ -15,7 +15,10 @@ router.get('/articles/mainProjects', async (req, res) => {
 
 // 인기 프로젝트 조회
 router.get('/articles/popularProjects', async (req, res) => {
-  const postings = await articles.find({}, { coontents: 0 });
+  const postings = await articles.find(
+    {},
+    { contents: 0, donator: 0, creatorImg: 0 }
+  );
   res.json({ result: true, popularProjects: postings });
 });
 
@@ -26,7 +29,7 @@ router.get('/articles/category', async (req, res) => {
   const count = await result.length;
   const postings = await articles.find(
     { category: category },
-    { coontents: 0 }
+    { contents: 0, donator: 0, creatorImg: 0 }
   );
   res.json({
     result: true,
@@ -35,10 +38,14 @@ router.get('/articles/category', async (req, res) => {
   });
 });
 
-// nickname & 후원한 프로젝트 조회 (마이페이지) => 구현 덜 됨
-router.get('/articles/myDonatedProjects', async (req, res) => {
+// nickname & 후원한 프로젝트 조회 (마이페이지)
+router.get('/articles/myDonatedProjects', authMiddlleware, async (req, res) => {
   const { user } = res.locals;
-  const postings = await articles.find({}, { coontents: 0 });
+  const postings = await articles.find(
+    { donator: { $elemMatch: { email: user.email } } },
+    { contents: 0, donator: 0, creatorImg: 0 }
+  );
+
   res.json({
     result: true,
     nickname: user.nickname,
@@ -48,13 +55,12 @@ router.get('/articles/myDonatedProjects', async (req, res) => {
 
 // 검색 ( 카테고리, title 기준 )
 router.get('/articles', async (req, res) => {
-  const keyword = req.query.search.replace(/ /gi, '');
-  console.log(keyword);
+  const keyword = req.query.search.replace(/\s/gi, '');
   const postings = await articles.find(
     {
       $or: [{ category: new RegExp(keyword) }, { title: new RegExp(keyword) }],
     },
-    { coontents: 0 }
+    { contents: 0, donator: 0, creatorImg: 0 }
   );
   res.json({
     result: true,
@@ -85,7 +91,7 @@ try {
 
       await articles
         .findByIdAndUpdate(articleId, {
-          $push: { donator: user.nickname },
+          $push: { donator: { email: user.email } },
           $inc: { totalAmount: +50000 },
         })
         .exec();
@@ -111,11 +117,13 @@ try {
         _id: articleId,
       });
 
-      const SW = name.donator.filter((e) => e !== user.nickname);
+      const donateCancel = name.donator.filter(
+        (e) => e === { email: user.email }
+      );
 
       await articles.findByIdAndUpdate(articleId, {
         $inc: { totalAmount: -50000 },
-        donator: SW,
+        donator: donateCancel,
       });
       res.json({ result: true });
     }
