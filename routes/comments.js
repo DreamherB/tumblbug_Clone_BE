@@ -1,25 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../schemas/user");
 const Comment = require("../schemas/comment");
 const authMiddleware = require("../middlewares/auth-middleware");
-const jwt = require("jsonwebtoken");
 
 /* 댓글 불러오기 */
 
 router.get("/comments/:articleId", async (req, res) => {
     const {articleId} = req.params;
-    const comments = await Comment.find({ articleId });
+    const comments = await Comment.find({ articleId }, {_id: false, __v: 0});
 
     res.json({ result: true,
-        comments: [{ 
-        commentId :  comments.commentId,
-        articleId : comments.articleId,
-        nickname : comments.nickname,
-        comment : comments.comment,
-        email: comments.email,
-      }]
-       });
+        comments,
+       
+    });
 });
 
 /* 댓글 작성, DB에 등록 */
@@ -52,7 +45,7 @@ router.post(
         });
 
         res.status(201).json({
-            result: "success",
+            result: true,
             'msg': "작성 완료되었습니다.",
         }); // 200은 ok신호, 201은 리소스 생성 완료 신호
     }
