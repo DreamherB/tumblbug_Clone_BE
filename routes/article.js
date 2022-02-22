@@ -22,7 +22,6 @@ router.get('/articles/popularProjects', async (req, res) => {
         contents: 0,
         donator: 0,
         creatorImg: 0,
-        articleId: 0,
       }
     )
     .sort({ totalAmount: -1 });
