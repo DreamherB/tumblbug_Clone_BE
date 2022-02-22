@@ -15,10 +15,17 @@ router.get('/articles/mainProjects', async (req, res) => {
 
 // 인기 프로젝트 조회
 router.get('/articles/popularProjects', async (req, res) => {
-  const postings = await articles.find(
-    {},
-    { contents: 0, donator: 0, creatorImg: 0, articleId: 0 }
-  );
+  const postings = await articles
+    .find(
+      {},
+      {
+        contents: 0,
+        donator: 0,
+        creatorImg: 0,
+        articleId: 0,
+      }
+    )
+    .sort({ totalAmount: -1 });
   res.json({ result: true, popularProjects: postings });
 });
 
@@ -26,7 +33,12 @@ router.get('/articles/popularProjects', async (req, res) => {
 router.get('/articles/all', async (req, res) => {
   const postings = await articles.find(
     {},
-    { contents: 0, donator: 0, creatorImg: 0, articleId: 0 }
+    {
+      contents: 0,
+      donator: 0,
+      creatorImg: 0,
+      articleId: 0,
+    }
   );
   const count = await postings.length;
   res.json({
