@@ -33,7 +33,6 @@ router.get('/articles/all', async (req, res) => {
   const postings = await articles.find(
     {},
     {
-      contents: 0,
       donator: 0,
       creatorImg: 0,
     }
@@ -51,7 +50,7 @@ router.get('/articles/category', async (req, res) => {
   const { category } = req.query;
   const postings = await articles.find(
     { category: category },
-    { contents: 0, donator: 0, creatorImg: 0 }
+    { donator: 0, creatorImg: 0 }
   );
   const count = await postings.length;
   res.json({
@@ -66,7 +65,7 @@ router.get('/articles/myDonatedProjects', authMiddleware, async (req, res) => {
   const { user } = res.locals;
   const postings = await articles.find(
     { donator: { $elemMatch: { email: user.email } } },
-    { contents: 0, donator: 0, creatorImg: 0 }
+    { donator: 0, creatorImg: 0 }
   );
 
   res.json({
@@ -83,7 +82,7 @@ router.get('/articles', async (req, res) => {
     {
       $or: [{ category: new RegExp(keyword) }, { title: new RegExp(keyword) }],
     },
-    { contents: 0, donator: 0, creatorImg: 0 }
+    { donator: 0, creatorImg: 0 }
   );
   res.json({
     result: true,
