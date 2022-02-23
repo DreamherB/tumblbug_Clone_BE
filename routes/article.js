@@ -142,15 +142,11 @@ try {
         articleId: articleId,
       });
 
-      const donateIndex = await name.donator.indexOf(user.email);
-
-      await name.donator.splice(donateIndex, 1);
-
       await articles.findOneAndUpdate(
         { articleId: articleId },
         {
           $inc: { totalAmount: -50000 },
-          donator: name.donator,
+          donator: name.donator.filter((e) => e !== user.email),
         }
       );
       res.json({ result: true });
