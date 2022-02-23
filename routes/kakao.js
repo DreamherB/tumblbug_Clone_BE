@@ -10,9 +10,7 @@ router.post("/users/loginKakao", async (req, res) => {
 
     const user = new User({ email, nickname });
     await user.save();
-    console.log("user", user);
-    console.log(333);
-
+    
     res.send({
         result: true,
         token: jwt.sign({ email: user.email }, JWT_SECRET_KEY),
