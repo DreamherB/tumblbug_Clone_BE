@@ -161,22 +161,19 @@ try {
                 articleId: articleId,
             });
 
-            const donateIndex = await name.donator.indexOf(user.email);
-
-            if (donateIndex === -1) {
+            if (name.donator.indexOf(user.email) === -1) {
                 res.json({
                     result: false,
                     msg: "이미 취소된 후원입니다.",
                 });
                 return;
             }
-            await name.donator.splice(donateIndex, 1);
 
             await articles.findOneAndUpdate(
                 { articleId: articleId },
                 {
                     $inc: { totalAmount: -50000 },
-                    donator: name.donator,
+                    donator: name.donator.filter((e) => e !== user.email),
                 }
             );
             res.json({ result: true });
