@@ -40,6 +40,3 @@ app.listen(port, () => {
   console.log(port, '포트로 서버가 요청 받을 준비가 됐습니다!');
 });
 
-app.use((req, res, next) => {
-  res.send({ msg: 'hi' });
-});

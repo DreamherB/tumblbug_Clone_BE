@@ -111,7 +111,19 @@ try {
       const { articleId } = req.params;
       const { user } = res.locals;
 
-      await articles
+      const thatArticle = await articles.findOne({articleId: articleId})
+      
+      // 사용자가 중복 클릭했을 경우 false를 리턴
+       if (thatArticle.donator.filter(
+        (e) => e === user.email 
+      ).length > 0) {
+        res.json({
+          result: false,
+          msg: "이미 완료된 후원입니다."
+        })
+        return;
+      } else {
+        await articles
         .findOneAndUpdate(
           { articleId: articleId },
           {
@@ -120,9 +132,11 @@ try {
           }
         )
         .exec();
+
       res.json({
         result: true,
       });
+      }
     }
   );
 } catch (error) {
@@ -144,8 +158,15 @@ try {
 
       const donateIndex = await name.donator.indexOf(user.email);
 
+      if (donateIndex === -1) {
+        res.json({
+          result: false,
+          msg: "이미 취소된 후원입니다."
+        })
+        return;
+      }
       await name.donator.splice(donateIndex, 1);
-
+        
       await articles.findOneAndUpdate(
         { articleId: articleId },
         {
