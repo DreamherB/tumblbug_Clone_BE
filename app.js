@@ -10,6 +10,7 @@ const { port } = process.env;
 const userRouter = require('./routes/users');
 const commentRouter = require('./routes/comments');
 const articleRouter = require('./routes/article');
+const kakaoRouter = require('./routes/kakao');
 
 // 몽고 db 커넥트
 connect();
@@ -29,7 +30,7 @@ app.use(cors());
 app.use(express.urlencoded());
 app.use(express.json());
 
-app.use('/api', [userRouter, commentRouter, articleRouter]);
+app.use('/api', [userRouter, commentRouter, articleRouter, kakaoRouter]);
 
 app.use((err, req, res, next) => {
   res.status(401).send({ result: 'fail', msg: err.message });
