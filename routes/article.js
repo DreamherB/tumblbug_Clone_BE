@@ -115,7 +115,7 @@ try {
         .findOneAndUpdate(
           { articleId: articleId },
           {
-            $push: { donator: { email: user.email } },
+            $push: { donator: user.email },
             $inc: { totalAmount: +50000 },
           }
         )
@@ -126,7 +126,6 @@ try {
     }
   );
 } catch (error) {
-  
   res.status(400).send({ result: false });
 }
 
@@ -143,15 +142,15 @@ try {
         articleId: articleId,
       });
 
-      const donateCancel = name.donator.filter(
-        (e) => e === { email: user.email }
-      );
+      const donateIndex = await name.donator.indexOf(user.email);
+
+      await name.donator.splice(donateIndex, 1);
 
       await articles.findOneAndUpdate(
         { articleId: articleId },
         {
           $inc: { totalAmount: -50000 },
-          donator: donateCancel,
+          donator: name.donator,
         }
       );
       res.json({ result: true });
