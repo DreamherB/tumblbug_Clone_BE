@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre("save", function (next) {
     let user = this;
 
-    if (user.password) {
+    if (user.password) { // 저장할 때 user로 받아오는 값 중 password가 있는 경우만 실행! 즉, 카카오는 받아오는 비밀번호가 없으므로 실행되지 않음
         bcrypt.genSalt(10, (err, salt) => {
             if (err) return next(err);
             bcrypt.hash(user.password, salt, (err, hash) => {
