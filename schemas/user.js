@@ -19,16 +19,19 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre("save", function (next) {
     let user = this;
 
-    if (user.password) { // 저장할 때 user로 받아오는 값 중 password가 있는 경우만 실행! 즉, 카카오는 받아오는 비밀번호가 없으므로 실행되지 않음
+    if (user.password) {
+        // 저장할 때 user로 받아오는 값 중 password가 있는 경우만 실행! 즉, 카카오는 받아오는 비밀번호가 없으므로 실행되지 않음
         bcrypt.genSalt(10, (err, salt) => {
             if (err) return next(err);
             bcrypt.hash(user.password, salt, (err, hash) => {
                 if (err) return next(err);
                 user.password = hash;
+                next();
             });
         });
+    } else {
+        next();
     }
-    next();
 });
 
 // 이전의 코드, 카카오 로그인 시 password라는 data가 없기 때문에 Error: data and salt arguments required 가 발생한다.
@@ -47,6 +50,8 @@ UserSchema.pre("save", function (next) {
 // 해당 메소드 사용 시 기존과 비교 실시
 UserSchema.methods.compare = function (password) {
     let user = this;
+    console.log("비교 password", password);
+    console.log("비교 user.password", user.password);
     return bcrypt.compareSync(password, user.password);
 };
 
