@@ -41,7 +41,11 @@ http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com/
 
 ## 결과 및 [🎥 시연 영상](https://youtu.be/s4IIfrH5daI)
 
-[토끼장터](http://hanghae99-rabbitmarket.s3-website.ap-northeast-2.amazonaws.com/)
-[텀블럭 클론코딩](http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com/)
-|![1](https://user-images.githubusercontent.com/82128525/154482059-cf314bbf-a71d-4f74-9f1a-5b1d404d6de3.gif)|![2](https://user-images.githubusercontent.com/82128525/154482798-85769583-8dcc-4a97-9ed4-81018b92de9d.gif)|![3](https://user-images.githubusercontent.com/82128525/154483293-18ee1142-2ca8-4b48-abfd-ba73791078a4.gif)|
-|:---:|:---:|:---:|
+[텀블벅 클론코딩](http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com/)    
+회원가입~로그인
+
+https://user-images.githubusercontent.com/96245651/155518838-c65fbf56-bc5e-4997-bdf0-8dd0278447cb.mp4
+
+로그인 이후 기능구현  
+
+https://user-images.githubusercontent.com/96245651/155518917-fdc49f7e-8d6d-43fc-89c4-ee7c14005738.mp4
