@@ -26,7 +26,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors());
+const whitelist = [
+  'http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com/',
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    const isWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, isWhitelisted);
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded());
 app.use(express.json());
 
@@ -39,4 +51,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(port, '포트로 서버가 요청 받을 준비가 됐습니다!');
 });
-
