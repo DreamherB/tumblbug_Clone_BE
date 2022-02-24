@@ -10,10 +10,12 @@ router.post("/users/loginKakao", async (req, res) => {
 
     const existsUsers = await User.findOne({ email });
     if (existsUsers) {
-        // NOTE: 보안을 위해 인증 메세지는 자세히 설명하지 않는것을 원칙으로 한다: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#authentication-responses
-        return res.status(400).send({
-            msg: "이미 존재하는 이메일입니다.",
+        // 이미 해당 이메일이 DB에 있는 경우 DB에 new User로 새로 테이블을 만들어주지 않고 토큰만 보내준다.
+        res.send({
+            result: true,
+            token: jwt.sign({ email: user.email }, JWT_SECRET_KEY),
         });
+        return;
     }
 
     const user = new User({ email, nickname });

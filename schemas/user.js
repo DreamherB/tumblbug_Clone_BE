@@ -50,7 +50,7 @@ UserSchema.pre("save", function (next) {
 // 해당 메소드 사용 시 기존과 비교 실시
 UserSchema.methods.compare = function (password) {
     let user = this;
-    
+
     return bcrypt.compareSync(password, user.password);
 };
 
