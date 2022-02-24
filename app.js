@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 const whitelist = [
-  'http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com/',
+  'http://tumblbugclone.s3-website.ap-northeast-2.amazonaws.com',
 ];
 
 const corsOptions = {
